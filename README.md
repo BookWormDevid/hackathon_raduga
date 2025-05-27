@@ -6,7 +6,7 @@
 
 Котов Дэвид Арсенович (Teamlead) @BookWormDevid
 
-Зыбин Михаил Александрович (AI, Training) @meksiner
+Зыбин Михаил Александрович (AI Training) @meksiner
 
 Овчинников Евгений Максимович (Backend) @Evgeniy3252834
 
