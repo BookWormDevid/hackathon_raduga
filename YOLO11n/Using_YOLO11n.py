@@ -112,7 +112,7 @@ def detect_video(video_path: str, output_dir: str = 'output') -> None:
 
 if __name__ == "__main__":
     # Example usage
-    image_path = "C:\datasets\processed\images/val/47.jpg"  # Replace with your image path
+    image_path = "YOLO11n/input/47.jpg"  # Replace with your image path
     video_path = "path/to/your/test_video.mp4"  # Replace with your video path
 
     # Detect objects in image
