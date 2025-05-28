@@ -159,5 +159,5 @@ def main():
     cv2.destroyAllWindows()
 
 
-if name == "main":
+if __name__ == "main":
     main() 
