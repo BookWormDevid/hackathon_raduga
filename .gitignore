@@ -37,7 +37,8 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Training logs and models
-YOLO11n/training.log
+YOLO11/training.log
+YOLO11/output
 
 # Unit test / coverage reports
 htmlcov/

@@ -1,7 +1,0 @@
-train: "C:/datasets/processed/images/train"
-val: "C:/datasets/processed/images/val"
-nc: 1
-names: ['Person']
-rect: False
-imgsz: [640, 640]
-Augment: True
