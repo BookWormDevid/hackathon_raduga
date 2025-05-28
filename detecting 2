@@ -1,0 +1,163 @@
+import cv2
+import numpy as np
+
+  
+class SimpleVisualOdometry:
+    def init(self):
+        self.feature_detector = cv2.SIFT_create()
+        self.matcher = cv2.BFMatcher(cv2.NORM_L2)
+        self.prev_frame = None
+        self.prev_kp = None
+        self.prev_des = None
+        self.camera_position = np.zeros(3)
+        self.rotation = np.eye(3)
+
+    def process_frame(self, frame):
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        kp, des = self.feature_detector.detectAndCompute(gray, None)
+
+        if self.prev_frame is not None and self.prev_kp is not None:
+            matches = self.matcher.knnMatch(des, self.prev_des, k=2)
+
+            good = []
+            for m, n in matches:
+                if m.distance < 0.7 * n.distance:
+                    good.append(m)
+
+            if len(good) > 10:
+                src_pts = np.float32([kp[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
+                dst_pts = np.float32([self.prev_kp[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
+
+                E, mask = cv2.findEssentialMat(src_pts, dst_pts, focal=1.0, pp=(0, 0),
+                                               method=cv2.RANSAC, prob=0.999, threshold=1.0)
+
+                _, R, t, _ = cv2.recoverPose(E, src_pts, dst_pts)
+                self.camera_position += self.rotation.dot(t.flatten())
+                self.rotation = R.dot(self.rotation)
+
+        self.prev_frame = gray
+        self.prev_kp = kp
+        self.prev_des = des
+
+        return self.camera_position, self.rotation
+
+
+class MultiObjectTracker:
+    def init(self):
+        self.template = None
+        self.bbox = None
+        self.method = cv2.TM_CCOEFF_NORMED
+        self.threshold = 0.7
+        self.tracked_objects = []
+
+    def init_tracker(self, frame, bbox):
+        x, y, w, h = bbox
+        self.template = frame[y:y + h, x:x + w]
+        self.bbox = (w, h)
+        self.find_objects(frame)
+
+    def find_objects(self, frame):
+        if self.template is None:
+            return []
+
+        result = cv2.matchTemplate(frame, self.template, self.method)
+        loc = np.where(result >= self.threshold)
+
+        objects = []
+        w, h = self.bbox
+        for pt in zip(*loc[::-1]):
+            objects.append((pt[0], pt[1], w, h))
+
+        objects = self._remove_overlapping(objects)
+        self.tracked_objects = objects
+        return objects
+
+    def _remove_overlapping(self, objects, overlap_threshold=0.5):
+        if not objects:
+            return []
+        objects.sort(key=lambda x: -x[2])
+
+        filtered = []
+        for obj in objects:
+            x, y, w, h = obj
+            new_rect = [x, y, x + w, y + h]
+
+            add = True
+            for f in filtered:
+                fx, fy, fw, fh = f
+                existing_rect = [fx, fy, fx + fw, fy + fh]
+
+                dx = min(new_rect[2], existing_rect[2]) - max(new_rect[0], existing_rect[0])
+                dy = min(new_rect[3], existing_rect[3]) - max(new_rect[1], existing_rect[1])
+                if dx > 0 and dy > 0:
+                    intersection = dx * dy
+                    area = w * h
+                    if intersection / area > overlap_threshold:
+                        add = False
+                        break
+
+            if add:
+                filtered.append(obj)
+
+        return filtered
+
+    def update(self, frame):
+        return self.find_objects(frame)
+
+
+def main():
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        print("Ошибка: камера не найдена!")
+        return
+
+    vo = SimpleVisualOdometry()
+    tracker = MultiObjectTracker()
+
+    for _ in range(5):
+        ret, frame = cap.read()
+        if not ret:
+            print("Ошибка чтения кадра")
+            return
+      
+    bbox = cv2.selectROI("Выберите объект", frame, False)
+    if bbox == (0, 0, 0, 0):
+        print("Объект не выбран")
+        return
+
+    tracker.init_tracker(frame, bbox)
+    cv2.destroyAllWindows()
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Ошибка получения кадра")
+            break
+
+        cam_pos, cam_rot = vo.process_frame(frame)
+        objects = tracker.update(frame)
+
+        for obj in objects:
+            x, y, w, h = [int(v) for v in obj]
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            obj_center = np.array([x + w / 2, y + h / 2, 1])
+            obj_pos = cam_rot.T @ (obj_center - cam_pos[:3])
+
+            cv2.putText(frame, f"Pos: {obj_pos[:2]}", (x, y - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+
+        cv2.putText(frame, f"Camera: {cam_pos[:2]}", (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+
+        cv2.imshow("Multi-Object Tracking", frame)
+
+        if cv2.waitKey(30) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+if name == "main":
+    main() 
