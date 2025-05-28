@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import os
 
 # Load your custom-trained YOLOv8n model
-model = YOLO('runs/detect/pedestrian_detection_partial/weights/best.pt')  # Replace with your model path
+model = YOLO('runs/detect/Search_rescue_YOLO11n/weights/best.pt')  # Replace with your model path
 
 # Define your class names (replace with your custom classes)
 class_names = ['class1', 'class2', 'class3', ...]  # Your custom class names
@@ -112,11 +112,14 @@ def detect_video(video_path: str, output_dir: str = 'output') -> None:
 
 if __name__ == "__main__":
     # Example usage
-    image_path = "YOLO11n/input/47.jpg"  # Replace with your image path
+    image_dir_path = "C:/Users/User.B305C14/PycharmProjects/hackathon_raduga/YOLO11n/input/"  # Replace with your image path
     video_path = "path/to/your/test_video.mp4"  # Replace with your video path
+    for image in os.listdir(image_dir_path):
+        image_path = os.path.join(image_dir_path, image)
+        detect_objects(image_path)
 
     # Detect objects in image
-    detect_objects(image_path)
+    # detect_objects(image_path)
 
     # Detect objects in video
     # detect_video(video_path)

@@ -128,7 +128,7 @@ def get_train_config(data_config_path, experiment_name=None):
     return config
 
 
-def load_model(model_path='yolo11n.pt'):
+def load_model(model_path='yolo11s.pt'):
     """Load and verify the pretrained model"""
     try:
         if not os.path.exists(model_path):
@@ -247,7 +247,7 @@ def main():
         # 3. Prepare training configuration
         train_config = get_train_config(
             data_config_path='data.yaml',
-            experiment_name='pedestrian_detection_partial'
+            experiment_name='Search_rescue_YOLO11n'
         )
 
         # 4. Load model
