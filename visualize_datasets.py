@@ -1,7 +1,6 @@
 import cv2
 import random
 from pathlib import Path
-import numpy as np
 
 
 def visualize_annotations(image_dir, label_dir, num_samples=5, window_size=(800, 800)):
