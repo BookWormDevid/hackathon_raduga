@@ -128,7 +128,7 @@ def get_train_config(data_config_path, experiment_name=None):
     return config
 
 
-def load_model(model_path='yolov8n.pt'):
+def load_model(model_path='yolo11n.pt'):
     """Load and verify the pretrained model"""
     try:
         if not os.path.exists(model_path):
@@ -254,7 +254,7 @@ def main():
         model = load_model()
 
         # 5. Freeze layers
-        model = freeze_model_layers(model, freeze_pattern='backbone')
+        #  model = freeze_model_layers(model, freeze_pattern='backbone')
 
         # 6. Train model
         train_results, val_metrics = train_model(model, train_config)
