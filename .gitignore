@@ -37,11 +37,12 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Training logs and models
-YOLO11/training.log
-# YOLO11/output
-YOLO11/runs/detect/Search_rescue_YOLO11m/weights
-YOLO11/runs/detect/Search_rescue_YOLO11s/weights
-YOLO11/runs/detect/Search_rescue_YOLO11n/weights
+YOLO/training.log
+# YOLO/output
+YOLO/runs/detect/Search_rescue_YOLO11m/weights
+YOLO/runs/detect/Search_rescue_YOLO11s/weights
+YOLO/runs/detect/Search_rescue_YOLO11n/weights
+YOLO/runs/detect/Search_rescue_YOLO12s/weights
 
 # Unit test / coverage reports
 htmlcov/
