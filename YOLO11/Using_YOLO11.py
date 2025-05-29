@@ -112,14 +112,17 @@ def detect_video(video_path: str, output_dir: str = 'output') -> None:
 
 if __name__ == "__main__":
     # Example usage
-    image_dir_path = "hackathon_raduga/YOLO11/input/"  # Replace with your image path
-    video_path = "path/to/your/test_video.mp4"  # Replace with your video path
+    # image_dir_path = "hackathon_raduga/YOLO11/input/"  # Replace with your image path
+    video_path = "C:/Users/User.B305C14/Downloads/dron_cut_1.mp4"  # Replace with your video path
+    '''
+    # detect objects in all images in a folder
     for image in os.listdir(image_dir_path):
         image_path = os.path.join(image_dir_path, image)
         detect_objects(image_path)
+    '''
 
-    # Detect objects in image
+    # Detect objects in an image
     # detect_objects(image_path)
 
-    # Detect objects in video
-    # detect_video(video_path)
+    # Detect objects in a video
+    detect_video(video_path)
