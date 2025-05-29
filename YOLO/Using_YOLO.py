@@ -2,8 +2,10 @@ import cv2
 from ultralytics import YOLO
 import os
 
+
+
 # Load your custom-trained YOLOv8n model
-model = YOLO('YOLO/runs/detect/Search_rescue_YOLO12s/weights/best.pt')  # Replace with your model path
+model = YOLO('C:/Users/User.B305C14/PycharmProjects/hackathon_raduga/YOLO/yolo12s.pt')  # Replace with your model path
 
 # Define your class names (replace with your custom classes)
 class_names = ['class1', 'class2', 'class3', ...]  # Your custom class names
@@ -53,7 +55,7 @@ def detect_objects(image_path, output_dir='output_yolo12s'):
     print(f"Results saved to {output_path}")
 
 
-def detect_video(video_path: str, output_dir: str = 'output') -> None:
+def detect_video(video_path: str, output_dir: str = 'output_yolo12s') -> None:
     """
     Detect objects in a video using the custom YOLO model
 
@@ -113,7 +115,7 @@ def detect_video(video_path: str, output_dir: str = 'output') -> None:
 if __name__ == "__main__":
     # Example usage
     image_path = "/YOLO/input/47.jpg"  # Replace with your image path
-    video_path = "C:/Users/User.B305C14/Downloads/dron_cut_1.mp4"  # Replace with your video path
+    video_path = "C:/Users/User.B305C14/Downloads/dron.mp4"  # Replace with your video path
 
     # detect objects in all images in a folder
     ''' 
@@ -123,7 +125,7 @@ if __name__ == "__main__":
     '''
 
     # Detect objects in an image
-    detect_objects(image_path)
+    # detect_objects(image_path)
 
     # Detect objects in a video
-    # detect_video(video_path)
+    detect_video(video_path)

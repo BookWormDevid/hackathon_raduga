@@ -3,7 +3,6 @@ from tkinter import filedialog, messagebox
 from Backend.model_inference import detect_objects, detect_video, detect_folder
 import os
 import subprocess
-from Backend.model_inference import detect_objects, detect_video
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
@@ -63,6 +62,7 @@ class App(ctk.CTk):
             os.startfile(path)
         else:  # macOS, Linux
             subprocess.run(["open" if os.name == "posix" else "xdg-open", path])
+
     def select_folder(self):
         folder_path = filedialog.askdirectory(title="Выберите папку с файлами")
         if folder_path:
