@@ -158,7 +158,7 @@ if __name__ == "__main__":
             break
 
         tracker.process_frame(frame)
-
+        # ДЛЯ ВЫХОДА ИЗ ПРИЛОЖЕНИЯ ПРОСТО НАЖАТЬ Q (на англише)!!!!
         if cv.waitKey(30) & 0xFF == ord('q'):
             break
 
