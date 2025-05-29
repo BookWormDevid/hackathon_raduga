@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import os
 
 # Load your custom-trained YOLOv8n model
-model = YOLO('YOLO/runs/detect/Search_rescue_YOLO11m/weights/best.pt')  # Replace with your model path
+model = YOLO('YOLO/runs/detect/Search_rescue_YOLO12s/weights/best.pt')  # Replace with your model path
 
 # Define your class names (replace with your custom classes)
 class_names = ['class1', 'class2', 'class3', ...]  # Your custom class names
@@ -12,7 +12,7 @@ class_names = ['class1', 'class2', 'class3', ...]  # Your custom class names
 conf_threshold = 0.5  # Adjust as needed
 
 
-def detect_objects(image_path, output_dir='output2'):
+def detect_objects(image_path, output_dir='output_yolo12s'):
     """
     Detect objects in an image using the custom YOLOv8n model
     """

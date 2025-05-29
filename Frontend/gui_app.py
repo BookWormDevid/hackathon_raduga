@@ -1,9 +1,9 @@
 import customtkinter as ctk
 from tkinter import filedialog, messagebox
-from model_inference import detect_objects, detect_video, detect_folder
+from Backend.model_inference import detect_objects, detect_video, detect_folder
 import os
 import subprocess
-from model_inference import detect_objects, detect_video
+from Backend.model_inference import detect_objects, detect_video
 
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")

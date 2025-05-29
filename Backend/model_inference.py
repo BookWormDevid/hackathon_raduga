@@ -2,8 +2,8 @@ import cv2
 from ultralytics import YOLO
 import os
 
-model = YOLO('runs/detect/Search_rescue_YOLO11m/weights/best.pt')
-class_names = ['class1', 'class2', 'class3']  # заменишь на свои
+model = YOLO('YOLO/runs/detect/Search_rescue_YOLO12s/weights/best.pt')
+class_names = ['person']
 conf_threshold = 0.5
 
 def detect_objects(image_path, output_dir='output'):
