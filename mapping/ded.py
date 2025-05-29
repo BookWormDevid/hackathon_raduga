@@ -134,7 +134,7 @@ class DroneTracker:
         map_view = cv.flip(map_view, 0)
         cv.imshow('Trajectory Map', map_view)
 
-        # Рисуем ключевые точкки на кадре
+        # Рисуем ключевые точки на кадре
         frame_with_kp = cv.drawKeypoints(frame, self.prev_kp, None, color=(0, 255, 0))
         cv.imshow('Drone View', frame_with_kp)
 
