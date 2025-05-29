@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 orb = cv.ORB_create()  # type: ignore
 
 # Открываем видеофайл
-video_path = 'C:/Users/Студент Т/Documents/GitHub/hackathon_raduga/ded.mp4'
+video_path = 'C:/Users/Студент Т/Documents/GitHub/hackathon_raduga/ded.mp4' # C:/Users/User.B305C14/PycharmProjects/hackathon_raduga/mapping/ded1.mp4
 cap = cv.VideoCapture(video_path)
 
 if not cap.isOpened():
