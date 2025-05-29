@@ -63,6 +63,14 @@ class App(ctk.CTk):
             os.startfile(path)
         else:  # macOS, Linux
             subprocess.run(["open" if os.name == "posix" else "xdg-open", path])
+    def select_folder(self):
+        folder_path = filedialog.askdirectory(title="Выберите папку с файлами")
+        if folder_path:
+            try:
+                detect_folder(folder_path, "output")
+                messagebox.showinfo("Успех", "Папка обработана! Результаты в 'output'.")
+            except Exception as e:
+                messagebox.showerror("Ошибка обработки папки", str(e))
 
 if __name__ == "__main__":
     app = App()
